@@ -5,10 +5,10 @@ import os
 inputfile = os.path.join( '.', 'Resources', 'budget_data.csv')
 # Location of output file
 outputdir = os.path.join( '.', 'output')
-outputfile = os.path.join( outputdir, 'pybank_output.csv')
+outputfile = os.path.join( outputdir, 'pybank_output.txt')
 
 # Initialize variables to be used in program
-count = 0
+monthCount = 0
 sumofPandL = 0
 maxProfit = ('', 0)
 maxLoss = ('', 0)
@@ -18,12 +18,13 @@ with open(inputfile, newline='') as csvfile:
     inputfile = csv.reader(csvfile)
     next(inputfile)
 
+    # Loop through CSV file and parse data
     for line in inputfile:
         if len(line) > 0:
             income = int(line[1])
 
-            # Increase count and add income to sum of profits/losses
-            count += 1
+            # Increase monthCount and add income to sum of profits/losses
+            monthCount += 1
             sumofPandL += income
 
             # Replace maxProfit with current month/profit if profit is greater
@@ -39,11 +40,11 @@ with open(inputfile, newline='') as csvfile:
 # Print results to console
 print("Financial Analysis")
 print("------------------")
-print(f"Total Months: {count}")
+print(f"Total Months: {monthCount}")
 print(f"Total Profit/Loss: ${sumofPandL}")
-print(f"Average Change: ${sumofPandL/count:.2f}")
-print(f"Greatest Increase in Profits: { maxProfit[0] } ($ { maxProfit[1] })")
-print(f"Greatest Decrease in Profits: { maxLoss[0] } ($ {maxLoss[1] })")
+print(f"Average Change: ${sumofPandL/monthCount:.2f}")
+print(f"Greatest Increase in Profits: {maxProfit[0]} ($ { maxProfit[1]})")
+print(f"Greatest Decrease in Profits: {maxLoss[0]} ($ {maxLoss[1]})")
 
 # Write output to text file
 if not os.path.exists(outputdir):
@@ -51,8 +52,8 @@ if not os.path.exists(outputdir):
 with open(outputfile, 'w') as fout:
     print("Financial Analysis" , file=fout)
     print("------------------" , file=fout)
-    print(f"Total Months: {count}" , file=fout)
+    print(f"Total Months: {monthCount}" , file=fout)
     print(f"Total Profit/Loss: ${sumofPandL}" , file=fout)
-    print(f"Average Change: ${sumofPandL/count}:.2f" , file=fout)
-    print(f"Greatest Increase in Profits: { maxProfit[0]} ($ { maxProfit[1]})" , file=fout)
-    print(f"Greatest Decrease in Profits: { maxLoss[0] } ($ {maxLoss[1] })" , file=fout)
+    print(f"Average Change: ${sumofPandL/monthCount:.2f}" , file=fout)
+    print(f"Greatest Increase in Profits: {maxProfit[0]} ($ {maxProfit[1]} )" , file=fout)
+    print(f"Greatest Decrease in Profits: {maxLoss[0]} ($ {maxLoss[1]} )" , file=fout)
